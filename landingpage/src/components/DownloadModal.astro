@@ -14,7 +14,7 @@ import { X, Terminal, Package } from 'lucide-astro';
                 <button id="close-x" class="group flex items-center justify-center w-5 h-5 rounded-md hover:bg-destructive/20 transition-colors cursor-pointer" title="Close Window">
                     <X class="w-3.5 h-3.5 text-destructive group-hover:scale-110 transition-transform" />
                 </button>
-                <div class="ml-3 text-[10px] font-mono text-muted-foreground opacity-70 select-none">SECURE_UPLINK</div>
+                <div class="ml-3 text-[10px] font-mono text-muted-foreground opacity-70 select-none">RELEASE_CHANNEL</div>
             </div>
         </div>
 
@@ -24,7 +24,7 @@ import { X, Terminal, Package } from 'lucide-astro';
             <!-- Loading State -->
             <div id="loading" class="flex flex-col items-center justify-center min-h-[400px] w-full space-y-4 animate-in fade-in duration-300">
                 <div class="w-12 h-12 border-4 border-muted border-t-secondary rounded-full animate-spin"></div>
-                <p class="font-mono text-secondary animate-pulse text-sm tracking-widest">ESTABLISHING CONNECTION...</p>
+                <p class="font-mono text-secondary animate-pulse text-sm tracking-widest">FETCHING RELEASES...</p>
             </div>
 
             <!-- Error State -->
@@ -32,10 +32,10 @@ import { X, Terminal, Package } from 'lucide-astro';
                 <div class="p-4 bg-destructive/10 border border-destructive/20 rounded-full mb-4">
                     <Terminal class="w-8 h-8 text-destructive" />
                 </div>
-                <h2 class="text-xl font-bold text-destructive mb-2 tracking-tight">SIGNAL LOST</h2>
-                <p class="text-muted-foreground text-sm mb-6">Target repository unreachable.</p>
+                <h2 class="text-xl font-bold text-destructive mb-2 tracking-tight">RELEASE FETCH FAILED</h2>
+                <p class="text-muted-foreground text-sm mb-6">The GitHub release feed could not be reached.</p>
                 <button id="retry-btn" class="px-6 py-2 bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded text-xs font-bold uppercase tracking-widest transition-colors shadow-lg shadow-destructive/20 cursor-pointer">
-                    Retry Uplink
+                    Retry Fetch
                 </button>
             </div>
 
@@ -112,7 +112,7 @@ import { X, Terminal, Package } from 'lucide-astro';
     const assetsList = document.getElementById('assets-list');
     const githubLink = document.getElementById('github-link');
     
-    const REPO = 'jR4dh3y/Pico32';
+    const REPO = 'jR4dh3y/adblock32';
     let hasLoaded = false;
 
     // Functions

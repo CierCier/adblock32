@@ -6,7 +6,10 @@ interface Props {
     description?: string;
 }
 
-const { title, description = "Stripped-down version of Murder32 for ESP32 Dev Boards." } = Astro.props;
+const {
+	title,
+	description = "DNS-based ad blocker firmware for ESP32 boards, with release downloads and setup details.",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -31,7 +34,7 @@ const { title, description = "Stripped-down version of Murder32 for ESP32 Dev Bo
             <p>
                 Made by <a href="https://github.com/jR4dh3y" target="_blank" rel="noopener noreferrer" class="text-foreground hover:text-secondary pointer-events-auto transition-colors">jR4dh3y</a>
                 <span class="mx-2 opacity-30">|</span>
-                Based on <a href="https://github.com/justcallmekoko/ESP32Marauder" target="_blank" rel="noopener noreferrer" class="text-foreground hover:text-destructive pointer-events-auto transition-colors">Murder32</a>
+                Built for ESP32 DNS filtering workloads
             </p>
         </footer>
 	</body>
