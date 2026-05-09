@@ -1,0 +1,54 @@
+---
+import { Cpu } from 'lucide-astro';
+import PicoLogo from './PicoLogo.astro';
+---
+
+<div class="relative w-full max-w-3xl mx-auto my-12 border border-border bg-card/50 backdrop-blur-sm p-1 rounded-xl shadow-2xl shadow-primary/5">
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between px-4 py-2 border-b border-border bg-muted/30 rounded-t-lg">
+        <div class="flex gap-2">
+            <div class="w-3 h-3 rounded-full bg-danger/50"></div>
+            <div class="w-3 h-3 rounded-full bg-warning/50"></div>
+            <div class="w-3 h-3 rounded-full bg-success/50"></div>
+        </div>
+        <div class="text-[10px] font-mono text-muted-foreground">PICO32_FIRMWARE_V1.0</div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="p-8 md:p-12 flex flex-col items-center justify-center text-center space-y-8 relative overflow-hidden">
+        
+        <!-- Glowing Orb/Effect -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center">
+            <div class="inline-flex items-center justify-center p-3 mb-8 rounded-2xl bg-secondary/10 border border-secondary/20 text-secondary">
+                <Cpu class="w-8 h-8" />
+            </div>
+            
+            <div class="mb-6">
+                <PicoLogo />
+            </div>
+            
+            <p class="text-lg md:text-xl text-muted-foreground max-w-md mx-auto leading-relaxed font-sans">
+                The precision tool for ESP32 development boards.
+                <span class="block mt-2 text-sm font-mono opacity-70 text-primary">Stripped. Optimized. Ready.</span>
+            </p>
+        </div>
+
+        <!-- Grid of metrics -->
+        <div class="grid grid-cols-3 gap-4 w-full max-w-sm relative z-10 border-t border-border/50 pt-8 mt-4">
+            <div class="text-center">
+                <div class="text-2xl font-mono font-bold text-foreground">4MB</div>
+                <div class="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Flash</div>
+            </div>
+            <div class="text-center border-l border-r border-border/50">
+                <div class="text-2xl font-mono font-bold text-foreground">240</div>
+                <div class="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">MHz</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-mono font-bold text-foreground">0ms</div>
+                <div class="text-[10px] uppercase tracking-widest text-muted-foreground mt-1">Latency</div>
+            </div>
+        </div>
+    </div>
+</div>

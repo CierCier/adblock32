@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+:root {
+    --background: #1e1e20;
+    --foreground: #dcd9e7;
+    --card: #2a2a2c;
+    --card-foreground: #dcd9e7;
+    --primary: #c59edc;
+    --primary-foreground: #1e1e20;
+    --secondary: #c3fb5b;
+    --secondary-foreground: #1e1e20;
+    --muted: #3a3a3d;
+    --muted-foreground: #9c96ad;
+    --border: #3a3a3d;
+    --destructive: #ff6e79;
+    --font-sans: 'Space Grotesk', ui-sans-serif, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    /* ASCII art colors */
+    --danger: #ff6b6b;
+    --warning: #ffd93d;
+    --success: #6bcb77;
+    --accent: #4d96ff;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-danger: var(--danger);
+    --color-warning: var(--warning);
+    --color-success: var(--success);
+    --color-accent: var(--accent);
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+.bg-grid {
+    background-image:
+        linear-gradient(rgba(197, 158, 220, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(197, 158, 220, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
