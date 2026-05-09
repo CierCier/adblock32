@@ -12,17 +12,17 @@ import { ArrowRight, Github, Shield } from 'lucide-astro';
            <PicoLogo />
         </div>
         <p class="text-xl text-muted-foreground max-w-lg leading-relaxed font-sans mt-2">
-            A compact DNS-based ad blocker for ESP32 boards. Route local clients through the device and filter known ad and tracking domains on the edge.
+            A compact DNS-based ad blocker for the Seeed XIAO ESP32-C6. Place it on your network edge to filter ads and tracking domains at the DNS level — no client-side software needed.
         </p>
     </div>
 
     <!-- Actions -->
     <div class="flex flex-row gap-4 w-full max-w-md">
-        <button id="init-btn" class="group flex-1 flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground px-6 py-3 rounded-lg font-bold text-sm tracking-wide transition-all shadow-[0_0_20px_-5px_rgba(195,251,91,0.3)] hover:shadow-[0_0_30px_-5px_rgba(195,251,91,0.5)] transform hover:-translate-y-0.5 cursor-pointer">
-            <span>DOWNLOAD</span>
+        <a href="https://github.com/CierCier/adblock32" target="_blank" rel="noopener noreferrer" class="group flex-1 flex items-center justify-center gap-2 bg-secondary hover:bg-secondary/90 text-secondary-foreground px-6 py-3 rounded-lg font-bold text-sm tracking-wide transition-all shadow-[0_0_20px_-5px_rgba(195,251,91,0.3)] hover:shadow-[0_0_30px_-5px_rgba(195,251,91,0.5)] transform hover:-translate-y-0.5">
+            <span>BUILD YOUR OWN</span>
             <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </button>
-        <a href="https://github.com/jR4dh3y/adblock32" target="_blank" rel="noopener noreferrer" class="flex-1 flex items-center justify-center gap-2 bg-transparent hover:bg-muted text-foreground border border-border px-6 py-3 rounded-lg font-medium text-sm tracking-wide transition-colors">
+        </a>
+        <a href="https://github.com/CierCier/adblock32" target="_blank" rel="noopener noreferrer" class="flex-1 flex items-center justify-center gap-2 bg-transparent hover:bg-muted text-foreground border border-border px-6 py-3 rounded-lg font-medium text-sm tracking-wide transition-colors">
             <Github class="w-4 h-4" />
             <span>SOURCE</span>
         </a>
@@ -35,8 +35,8 @@ import { ArrowRight, Github, Shield } from 'lucide-astro';
                 <Shield class="w-6 h-6" />
             </div>
             <div>
-                <h3 class="text-sm font-bold font-mono text-foreground uppercase tracking-wider mb-1">Local DNS Filtering</h3>
-                <p class="text-xs text-muted-foreground">Designed to sit on the network edge and block requests before ads load on client devices.</p>
+                <h3 class="text-sm font-bold font-mono text-foreground uppercase tracking-wider mb-1">Network-Level Blocking</h3>
+                <p class="text-xs text-muted-foreground">Point your router's DNS at the ESP32-C6 and block ads across every device on your LAN — no installs needed.</p>
             </div>
             
             <!-- Hover Card: Screenshot -->

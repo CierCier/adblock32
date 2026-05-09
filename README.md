@@ -1,69 +1,80 @@
 # adblock32
 
-`adblock32` is a DNS-based ad blocker for the ESP32 platform.
+`adblock32` is a DNS-based ad blocker for the Seeed XIAO ESP32-C6. It sits on your network edge and filters ads and tracking domains at the DNS level — no client-side software needed.
 
-## Layout
+## Features
 
-- `platformio.ini`: firmware build configuration for the Seeed XIAO ESP32-C6 target.
-- `src/`: firmware source files.
-- `partitions.csv`: flash partition table used by PlatformIO.
-- `landingpage/`: Astro-based landing page for project information and releases.
+- **DNS filtering engine** — suffix, exact, and glob pattern matching (`*`, `?`, `[...]`)
+- **Allowlist** — bypass blocking for specific domains
+- **CIDR-based per-client policies** — apply rules to specific subnets
+- **DNS cache** — 64-entry LRU with TTL-aware expiry and negative caching (30s)
+- **Stats & logging** — 200-entry ring buffer query log, running counters, top-N blocked domains, per-client tracking (16 max)
+- **OLED display** (optional) — SH110X 128x64, terminal-style 7-line scrolling blocked list with stats bar
+- **Wi-Fi provisioning** via hidden serial protocol (not exposed in public shell)
+- **Persistent storage** — rules, policies, and credentials stored in NVS across reboots
 
-## Firmware setup
+## Hardware
 
-1. Install [PlatformIO Core](https://platformio.org/install/core) or the PlatformIO IDE extension.
-2. From the repository root, run `pio run` to build.
-3. Connect the target board and run `pio run -t upload` to flash.
-4. Open logs with `pio device monitor -b 115200`.
+- **Target**: Seeed XIAO ESP32-C6 (RISC-V, 4MB flash, 320KB RAM)
+- **Display** (optional): SH110X 128x64 OLED via I2C
+- **Partition layout**: two 1.75MB OTA app slots + 448KB SPIFFS
+
+## Quick start
+
+1. Install [PlatformIO Core](https://platformio.org/install/core).
+2. Clone the repo and build:
+   ```
+   git clone https://github.com/CierCier/adblock32.git
+   cd adblock32
+   pio run -e seeed_xiao_esp32c6
+   ```
+3. Connect the board and upload:
+   ```
+   pio run -e seeed_xiao_esp32c6 -t upload --upload-port /dev/ttyACM0
+   ```
+4. Configure Wi-Fi using the provisioning script:
+   ```
+   ./setup-wifi.py /dev/ttyACM0
+   ```
+5. Point your router's DNS at the board's IP and you're done.
 
 ## Build variants
 
-- `seeed_xiao_esp32c6`: default headless build with display support disabled.
-- `seeed_xiao_esp32c6_display`: enables the SH110X display driver and display status output.
+| Variant | Description |
+|---|---|
+| `seeed_xiao_esp32c6` | Headless build — no display support |
+| `seeed_xiao_esp32c6_display` | Enables SH110X OLED display driver and terminal status output |
 
-Use `pio run -e <env>` and `pio run -e <env> -t upload` to select a specific variant.
+## Serial protocol
 
-## Wi-Fi credential persistence
+Wi-Fi commands are hidden behind a 3-byte magic prefix (`\x02\xAD\x32`) and are not accessible from the public serial shell. Use the included `setup-wifi.py` script for provisioning.
 
-The firmware stores Wi-Fi credentials in ESP32 NVS so the device can reconnect automatically after reboot.
+Available public commands:
 
-Available serial commands:
+- `help` — print the command list
+- `stats` — show query/block/cache counters
+- `filter <add|remove|list>` — manage block rules
+- `source <list|add|remove>` — manage remote filter sources
 
-- `wifi set <ssid> <password>`: save credentials and connect immediately.
-- `wifi status`: print current Wi-Fi status.
-- `wifi clear`: erase saved credentials.
-- `help`: print the command list.
+## DNS filtering pipeline
 
-## DNS filtering
+```
+client query → DNS cache (hit? return) → filter engine → stats collector → upstream forward → cache response
+```
 
-When Wi-Fi connects successfully, the firmware starts a DNS listener on port `53` and forwards allowed queries to `1.1.1.1`.
+- Queries are first checked against the DNS cache (LRU, TTL-aware).
+- Misses go through the filter engine: allowlist → CIDR policy → blocklist.
+- Allowed queries are forwarded to `1.1.1.1`; blocked queries return `NXDOMAIN`.
+- Responses are cached with the TTL from the first answer record.
+- Remote filter sources are refreshed automatically every 24 hours with retry backoff.
 
-- Built-in ad-domain rules are always active.
-- Custom block rules are stored in ESP32 NVS and survive reboot.
-- Remote ad-domain rules are fetched from a configurable source list.
-- The default source list includes:
-  `https://adguardteam.github.io/AdguardFilters/BaseFilter/sections/adservers.txt`
-  `https://adguardteam.github.io/AdguardFilters/BaseFilter/sections/adservers_firstparty.txt`
-- Remote rules are refreshed automatically about once every 24 hours, with retry backoff on fetch failure.
-- Blocked domains currently return `NXDOMAIN`.
+## Landing page
 
-Available filter commands:
+The `landingpage/` directory contains an Astro-based static site for project info:
 
-- `filter add <domain>`: add a persistent custom block rule.
-- `filter remove <domain>`: remove a persistent custom block rule.
-- `filter list`: print built-in and custom rule state.
-- `filter status`: print the same rule summary plus DNS listener state.
-- `filter refresh`: force an immediate remote rule refresh.
-
-Available source commands:
-
-- `source list`: print the active remote filter source list.
-- `source add <url>`: add another HTTPS filter source.
-- `source remove <url>`: remove an active HTTPS filter source.
-
-## Landing page setup
-
-1. Change into `landingpage/`.
-2. Install dependencies with `bun install`.
-3. Start local development with `bun dev`.
-4. Build production assets with `bun build`.
+```
+cd landingpage
+bun install
+bun dev      # development
+bun build    # production build
+```

@@ -13,7 +13,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.11",
     "lucide-astro": "^0.556.0",
-    "marked": "^17.0.1",
+
     "tailwindcss": "^4.1.18"
   }
 }
